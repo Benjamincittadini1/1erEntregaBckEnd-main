@@ -6,7 +6,12 @@ export const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(function(req, res, next){
+    res.status(404);  
+    if (req.accepts('html')) {
+      res.render('404', { url: req.url });
+      return;
+    } })
 app.use('/api/productos', routerProducto);
 app.use('/api/carrito', routerCarrito);
 
